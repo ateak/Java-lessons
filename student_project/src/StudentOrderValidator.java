@@ -4,14 +4,27 @@ public class StudentOrderValidator
         checkAll();
     }
     static void checkAll() {
-        StudentOrder so = readStudentOrder();
 
-        AnswerCityRegister cityAnswer = checkCityRegister(so);
-        AnswerWedding wedAnswer = checkWedding(so);
-        AnswerChildren childAnswer = checkChildren(so);;
-        AnswerStudent studentAnswer = checkStudent(so);
+        while(true) {
+            StudentOrder so = readStudentOrder();
+            System.out.println("Start");
+            if (so == null) {
+                break;
+            }
+            System.out.println("Finish");
 
-        sendMail(so);
+            AnswerCityRegister cityAnswer = checkCityRegister(so);
+            if (!cityAnswer.success) {
+                continue;
+            }
+
+            AnswerWedding wedAnswer = checkWedding(so);
+            AnswerChildren childAnswer = checkChildren(so);
+            AnswerStudent studentAnswer = checkStudent(so);
+
+            sendMail(so);
+        }
+        System.out.println("Finish2");
     }
     static StudentOrder readStudentOrder() {
         StudentOrder so = new StudentOrder();
@@ -20,6 +33,7 @@ public class StudentOrderValidator
     static AnswerCityRegister checkCityRegister(StudentOrder so) {
         System.out.println("CityRegister is running");
         AnswerCityRegister ans = new AnswerCityRegister();
+        ans.success = false;
         return ans;
 
     }
