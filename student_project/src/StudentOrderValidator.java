@@ -14,13 +14,19 @@ public class StudentOrderValidator
             //System.out.println("Finish");
 
             AnswerCityRegister cityAnswer = checkCityRegister(so);
-            if (!cityAnswer.success) {
+            /*if (!cityAnswer.success) {
+                //continue;
+                break;
+            }*/
+
+            AnswerChildren childAnswer = checkChildren(so);
+            if (!childAnswer.success) {
                 //continue;
                 break;
             }
 
+
             AnswerWedding wedAnswer = checkWedding(so);
-            AnswerChildren childAnswer = checkChildren(so);
             AnswerStudent studentAnswer = checkStudent(so);
 
             sendMail(so);
@@ -45,21 +51,17 @@ public class StudentOrderValidator
         return ans1;
     }
     static AnswerWedding checkWedding(StudentOrder so) {
-        System.out.println("Wedding запущен");
-        AnswerWedding ans = new AnswerWedding();
-        return ans;
+        WeddingValidator wd = new WeddingValidator();
+        return wd.checkWedding(so);
     }
     static AnswerChildren checkChildren(StudentOrder so) {
-        System.out.println("ChildrenCheck is running");
-        AnswerChildren ans = new AnswerChildren();
-        return ans;
+        ChildrenValidator cv = new ChildrenValidator();
+        return cv.checkChildren(so);
     }
     static AnswerStudent checkStudent(StudentOrder so) {
-        System.out.println("Студенты проверяются");
-        AnswerStudent ans = new AnswerStudent();
-        return ans;
+        return new StudentValidator().checkStudent(so);
     }
     static void sendMail(StudentOrder so) {
-        System.out.println("Почта отправлена");
+        new MailSender().sendMail(so);
     }
 }
