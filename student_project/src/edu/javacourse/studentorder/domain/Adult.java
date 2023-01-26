@@ -11,6 +11,12 @@ public class Adult extends Person
     private String university;
     private String studentId;
 
+
+
+    public String getPersonString() {
+        return surName + " " + givenName + " " + passportNumber;
+    }
+
     public String getPassportSeria() {
         return passportSeria;
     }
